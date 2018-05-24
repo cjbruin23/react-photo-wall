@@ -34,9 +34,7 @@ class App extends Component {
 
 
   render() {
-    console.log(this.state);
     const { photos = [] } = this.state;
-    console.log(photos);
     return (
       <React.Fragment>
         <header>
