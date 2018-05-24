@@ -10,15 +10,33 @@ const PHOTO_LIST_URL = "https://picsum.photos/list";
 class App extends Component {
   // 1. Declare a state object that will be used to track an array of photos
   state = {
+    photos: []
   }
 
   // 2. Declare a life cycle method
   // This life cycle method should:
-  //  - will be called after the component is initially rendered
+  // - will be called after the component is initially rendered
   // - will fetch an array of photos
   // - will add that array of photos to state once received
+
+  componentDidMount() {
+    let self = this;
+    fetch(PHOTO_LIST_URL)
+      .then(function(res) {
+        res.json().then(function(data) {
+          self.setState({
+            photos: data
+          })
+        })
+      });
+  }
+  componentWillUnmount(){}
+
+
   render() {
+    console.log(this.state);
     const { photos = [] } = this.state;
+    console.log(photos);
     return (
       <React.Fragment>
         <header>
@@ -34,9 +52,9 @@ class App extends Component {
               * and for loops are not. You'll learn more about this soon! 
               */}
             {photos.map( photo => 
-                <img alt={/* 3. Fill me in with the photo's filename */ ""}
-                     key={/* 4. Fill me in with the photo's id */ ""}
-                     src={/* 5. Fill me in with the photo's URL */ ""}
+                <img alt={/* 3. Fill me in with the photo's filename */ photo.filename}
+                     key={/* 4. Fill me in with the photo's id */ photo.id}
+                     src={/* 5. Fill me in with the photo's URL */ PHOTO_URL + photo.post_url}
                 />
             )}
         </div>
